@@ -22,6 +22,7 @@
         android:paddingTop="20dp">
 
         <LinearLayout
+            android:id="@+id/linearLayout0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -31,7 +32,7 @@
                 style="@style/viewParent.headerText.NoMode"
                 android:layout_width="match_parent"
                 android:textAlignment="center"
-                android:text="Start Saving"
+                android:text="Start Saving Today"
                 android:textSize="35sp"/>
 
             <View
@@ -86,25 +87,25 @@
                 android:layout_height="68dp">
 
                 <LinearLayout
-                    android:id="@+id/linearLayout"
+                    android:id="@+id/linearLayout1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ProgressBar
-                        android:id="@+id/progressBar4"
+                        android:id="@+id/progressbar"
                         style="?android:attr/progressBarStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:visibility="invisible" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/state"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -112,14 +113,15 @@
                         android:text="Sending OTP"
                         android:textAlignment="viewStart"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -130,13 +132,13 @@
                         style="@style/parent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        android:visibility="invisible">
 
                         <EditText
                             android:id="@+id/codeEnter"
                             style="@style/modifiedEditText"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal|top"
                             android:hint="Enter OTP"
                             android:inputType="phone"
                             android:letterSpacing="0.1"
@@ -146,10 +148,30 @@
                             android:singleLine="true"
                             android:textAlignment="center"
                             android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="invisible" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
             </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/resend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Resend OTP"
+                    android:textAlignment="textEnd"
+                    android:textColor="#CA4F4F"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
             <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
                 android:id="@+id/cirLoginButton"
@@ -161,11 +183,6 @@
                 app:spinning_bar_color="#FFF"
                 app:spinning_bar_padding="6dp"
                 app:spinning_bar_width="4dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"></LinearLayout>
 
 
         </LinearLayout>

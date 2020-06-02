@@ -3,6 +3,7 @@
 
     <style name="modifiedEditText" parent="parent">
         <item name="android:textSize">@dimen/newsMoreTextSize</item>
+        <item name="android:textAlignment">center</item>
         <item name="android:backgroundTint">@color/primaryTextColor</item>
     </style>
 </resources>

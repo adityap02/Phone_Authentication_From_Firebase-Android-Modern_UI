@@ -2,4 +2,8 @@
     <string name="app_name">ModernLogin</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="start_saving">Start Saving</string>
+    <string name="start_saving_today">Start Saving Today</string>
 </resources>
