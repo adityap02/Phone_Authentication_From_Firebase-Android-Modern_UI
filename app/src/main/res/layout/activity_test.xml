@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.app2.RegisterActivity"
+    tools:context="com.example.app2.test"
     android:background="@color/whiteTextColor"
     android:focusableInTouchMode="true"
     android:gravity="center"
@@ -66,13 +66,12 @@
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <EditText
-                            android:id="@+id/editTextName"
-                            style="@style/modifiedEditText"
                             android:drawableLeft="@drawable/ic_baseline_person_24"
+                            android:id="@+id/fullname"
+                            style="@style/modifiedEditText"
                             android:hint=" Name"
                             android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:textAlignment="textStart" />
+                            android:maxLines="1" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -81,13 +80,12 @@
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <EditText
+                            android:drawableLeft="@drawable/ic_baseline_email_24"
                             android:id="@+id/editTextEmail"
                             style="@style/modifiedEditText"
-                            android:drawableLeft="@drawable/ic_baseline_email_24"
                             android:hint=" Email"
                             android:inputType="textEmailAddress"
-                            android:maxLines="1"
-                            android:textAlignment="textStart" />
+                            android:maxLines="1" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -96,14 +94,13 @@
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <EditText
+                            android:drawableLeft="@drawable/ic_baseline_place_24"
                             android:id="@+id/editTextAddress"
                             style="@style/modifiedEditText"
                             android:layout_height="68dp"
-                            android:drawableLeft="@drawable/ic_baseline_place_24"
                             android:hint=" Address"
                             android:inputType="textMultiLine"
-                            android:maxLines="1"
-                            android:textAlignment="textStart" />
+                            android:maxLines="1" />
                     </android.support.design.widget.TextInputLayout>
 
                     <ProgressBar

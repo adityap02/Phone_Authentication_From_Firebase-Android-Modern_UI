@@ -28,103 +28,61 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-    public static final String TAG = "TAG";
-    private FirebaseAuth fAuth;
-    EditText mFullName,mEmail,mPassword,mPhone;
-    Button mRegisterBtn;
-    TextView mLoginBtn ;
-    ProgressBar progressbar;
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore fStore;
+    EditText name,email,address;
+    Button registerbtn;
     String userID;
-    FirebaseFirestore fstore;
-
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        changeStatusBarColor();
-        mFullName = findViewById(R.id.editTextName);
-        mEmail =findViewById(R.id.editTextEmail);
-        mPassword=findViewById(R.id.editTextPassword);
-        mPhone = findViewById(R.id.editTextMobile);
-        mRegisterBtn= findViewById(R.id.cirRegisterButton);
-        //mLoginBtn = findViewById(R.id.)
-        fAuth = FirebaseAuth.getInstance();
-        progressbar = findViewById(R.id.progressBar2);
-        fstore = FirebaseFirestore.getInstance();
 
-        if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-            finish();
-        }
+        name = findViewById(R.id.editTextName);
+        email = findViewById(R.id.editTextEmail);
+        address = findViewById(R.id.editTextAddress);
+        registerbtn = findViewById(R.id.cirRegisterButton);
+        progressBar = findViewById(R.id.progressBar2);
 
-        mRegisterBtn.setOnClickListener(new View.OnClickListener() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
+        userID = firebaseAuth.getCurrentUser().getUid();
+        final DocumentReference docref=fStore.collection("users").document(userID);
+
+
+        registerbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                String email = mEmail.getText().toString().trim();
-                String password = mPassword.getText().toString().trim();
-                final String fullname = mFullName.getText().toString();
-                final String phone = mPhone.getText().toString();
-
-                if(TextUtils.isEmpty(email)){
-                    mEmail.setError("Email is Empty");
+                if(!name.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !address.getText().toString().isEmpty() ){
+                    progressBar.setVisibility(View.VISIBLE);
+                    String fullname = name.getText().toString();
+                    String mail = email.getText().toString();
+                    String add = address.getText().toString();
+                    Map<String,Object>user = new HashMap<>();
+                    user.put("Name",fullname);
+                    user.put("Email",mail);
+                    user.put("Address",add);
+                    docref.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
+                                finish();
+                            }
+                            else{
+                       Toast.makeText(RegisterActivity.this,"Data is Not Inserted",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }else{
+                    Toast.makeText(RegisterActivity.this,"All Fields are empty",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(TextUtils.isEmpty(password)){
-                    mPassword.setError("Password is Required");
-                    return;
-                }
-
-                if(password.length()<6){
-                    mPassword.setError("Password Must be Greater Than 6 Characters");
-                }
-                progressbar.setVisibility(View.VISIBLE);
-
-                //Register User
-
-                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>(){
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task){
-                        if (task.isSuccessful()){
-                            Toast.makeText(RegisterActivity.this,"User Created",Toast.LENGTH_SHORT).show();
-                            userID = fAuth.getCurrentUser().getUid();
-                            DocumentReference documentReference = fstore.collection("users").document(userID);
-                            Map<String,Object> user = new HashMap<>();
-                            user.put("Name",fullname);
-                            user.put("Email",fullname);
-                            user.put("Phone",phone);
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                Log.d(TAG,"onSuccess : User Profile is Created For" + userID );
-                                }
-                            });
-
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        }
-                        else{
-                            Toast.makeText(RegisterActivity.this,"Error"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                            progressbar.setVisibility(View.GONE);
-                        }
-                    }
-                });
             }
         });
-    }
-    private void changeStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setStatusBarColor(getResources().getColor(R.color.register_bk_color));
-        }
-    }
-
-    public void onLoginClick(View view){
-        startActivity(new Intent(this,LoginActivity.class));
-        overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
 
     }
-
-
-
 }
